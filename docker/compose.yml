@@ -1,0 +1,14 @@
+services:
+  ui:
+    build: .
+    ports:
+      - "8188:8188"
+    tty: true
+    runtime: nvidia
+    volumes:
+      - ../ComfyUI/models:/app/ComfyUI/models
+      - ../ComfyUI/output:/app/ComfyUI/output
+    working_dir: /app/ComfyUI
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    entrypoint: ["python", "main.py", "--listen", "0.0.0.0"] 
