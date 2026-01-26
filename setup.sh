@@ -1,10 +1,6 @@
 #!/bin/bash
 
 git submodule update --init --recursive
-if [ ! -L ComfyUI/user/default/workflows ]; then
-    mkdir -p ComfyUI/user/default
-    ln -s ../../../workflows ComfyUI/user/default/workflows
-fi
 (
     cd ComfyUI/custom_nodes
     if [ ! -d comfyui-manager ]; then
