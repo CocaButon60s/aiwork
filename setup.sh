@@ -7,7 +7,11 @@ if [ ! -L ComfyUI/user/default/workflows ]; then
 fi
 (
     cd ComfyUI/custom_nodes
-    git clone https://github.com/ltdrdata/ComfyUI-Manager comfyui-manager --depth 1
+    if [ ! -d comfyui-manager ]; then
+        git clone https://github.com/ltdrdata/ComfyUI-Manager comfyui-manager --depth 1
+    fi
     # resize image and remove bg
-    git clone https://github.com/cubiq/ComfyUI_essentials.git comfyui_essentials --depth 1
+    if [ ! -d comfyui_essentials ]; then
+        git clone https://github.com/cubiq/ComfyUI_essentials.git comfyui_essentials --depth 1
+    fi
 )
