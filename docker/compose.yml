@@ -6,9 +6,9 @@ services:
     tty: true
     runtime: nvidia
     volumes:
-      - ../ComfyUI/models:/app/ComfyUI/models
-      - ../ComfyUI/output:/app/ComfyUI/output
+      - ../ComfyUI:/app/ComfyUI
     working_dir: /app/ComfyUI
+    user: user
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-    entrypoint: ["python", "main.py", "--listen", "0.0.0.0"] 
+    entrypoint: /entrypoint.sh

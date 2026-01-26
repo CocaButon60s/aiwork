@@ -18,9 +18,12 @@ useradd -m -u 1000 -g 1000 user
 chown -R user:user /app
 EOF
 
-USER user
-RUN git clone https://github.com/comfyanonymous/ComfyUI.git --depth 1
-WORKDIR /app/ComfyUI
-RUN pip install --no-cache-dir -r requirements.txt
-WORKDIR /app/ComfyUI/custom_nodes
-RUN git clone https://github.com/ltdrdata/ComfyUI-Manager comfyui-manager --depth 1
+COPY --chown=user:user --chmod=744 <<EOF /entrypoint.sh
+#!/bin/bash
+pip install --no-cache-dir -r requirements.txt
+# for comfyui-essentials
+pip install rembg[gpu]
+
+python main.py --listen 0.0.0.0
+
+EOF
