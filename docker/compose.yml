@@ -5,10 +5,11 @@ services:
       - "8188:8188"
     tty: true
     runtime: nvidia
+    shm_size: '4gb'
     volumes:
       - ../ComfyUI:/app/ComfyUI
-    working_dir: /app/ComfyUI
-    user: user
+      - ../sd-scripts:/app/sd-scripts
+    working_dir: /app
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
     entrypoint: /entrypoint.sh
