@@ -1,0 +1,22 @@
+FROM pytorch/pytorch:2.10.0-cuda13.0-cudnn9-runtime
+
+COPY --chmod=744 <<EOF /entrypoint.sh
+#!/bin/bash
+
+apt update
+apt install -y git python3.12-venv
+
+# for tkinter
+apt install -y python3-tk libgl1 libglib2.0-0
+
+rm -rf /var/lib/apt/lists/*
+
+[ ! -d "OneTrainer" ] && git clone https://github.com/Nerogar/OneTrainer.git
+(
+    cd OneTrainer && git pull
+    [ ! -d "venv" ] && ./install.sh
+    ./update.sh
+)
+sleep infinity
+
+EOF

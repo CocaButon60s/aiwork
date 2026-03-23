@@ -1,15 +1,32 @@
 services:
-  ui:
-    build: .
+  comfyui:
+    build:
+      context: .
+      dockerfile: Dockerfile_comfyui
     ports:
       - "8188:8188"
     tty: true
     runtime: nvidia
     shm_size: '4gb'
     volumes:
-      - ../ComfyUI:/app/ComfyUI
-      - ../sd-scripts:/app/sd-scripts
+      - ../share:/app
     working_dir: /app
     environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    entrypoint: /entrypoint.sh
+
+  onetrainer:
+    build:
+      context: .
+      dockerfile: Dockerfile_onetrainer
+    tty: true
+    runtime: nvidia
+    shm_size: '4gb'
+    volumes:
+      - ../share:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    working_dir: /app
+    environment:
+      - DISPLAY=$DISPLAY
       - NVIDIA_VISIBLE_DEVICES=all
     entrypoint: /entrypoint.sh
