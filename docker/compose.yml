@@ -15,18 +15,29 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
     entrypoint: /entrypoint.sh
 
-  onetrainer:
-    build:
-      context: .
-      dockerfile: Dockerfile_onetrainer
-    tty: true
+  ai:
+    image: ollama/ollama
     runtime: nvidia
     shm_size: '4gb'
+    ports:
+      - "11434:11434"
     volumes:
-      - ../share:/app
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    working_dir: /app
+      - ../ollama:/root/.ollama
     environment:
-      - DISPLAY=$DISPLAY
       - NVIDIA_VISIBLE_DEVICES=all
-    entrypoint: /entrypoint.sh
+
+  # onetrainer:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile_onetrainer
+  #   tty: true
+  #   runtime: nvidia
+  #   shm_size: '4gb'
+  #   volumes:
+  #     - ../share:/app
+  #     - /tmp/.X11-unix:/tmp/.X11-unix
+  #   working_dir: /app
+  #   environment:
+  #     - DISPLAY=$DISPLAY
+  #     - NVIDIA_VISIBLE_DEVICES=all
+  #   entrypoint: /entrypoint.sh
